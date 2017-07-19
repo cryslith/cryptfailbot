@@ -18,10 +18,7 @@ def handle_zgram(zp, zgram):
     if zgram.cls not in rooms:
         return
     opcode = zgram.opcode.lower()
-    print(repr(opcode))
     if 'auto' in opcode:
-        return
-    if 'crypt' in opcode:
         return
     try:
         message = zgram.fields[1]
@@ -29,7 +26,7 @@ def handle_zgram(zp, zgram):
         return
     if not message:
         return
-    if '-----BEGIN PGP MESSAGE' in message:
+    if 'crypt' in opcode and '-----BEGIN PGP MESSAGE' in message:
         return
     if not check_rate(zgram.cls):
         return
